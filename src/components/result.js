@@ -10,7 +10,6 @@ const Result = ({
   responses,
   viewCorrect,
 }) => {
-  console.log(viewCorrect);
   return (
     <div className="score-board">
       <div className="score">
@@ -26,6 +25,7 @@ const Result = ({
           computeAnswer={computeAnswer}
           responses={responses}
           score={score}
+          viewCorrect={viewCorrect}
         />
       ) : null}
     </div>

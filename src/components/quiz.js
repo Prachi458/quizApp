@@ -5,17 +5,18 @@ import Result from "./result";
 const Quiz = ({
   questionBank,
   computeAnswer,
-  responses,
   score,
   name,
   viewCorrectAnswers,
   viewCorrect,
+  isResult,
+  handleSubmit,
 }) => {
   return (
     <div className="container">
       <div className="title">Quiz App</div>
       {questionBank.length > 0 &&
-        responses < 5 &&
+        !isResult &&
         questionBank.map(({ question, answers, correct, questionId }) => (
           <QuestionBox
             question={question}
@@ -26,16 +27,21 @@ const Quiz = ({
             selected={(answer) => computeAnswer(answer, correct)}
           />
         ))}
-      {responses === 5 ? (
+
+      {isResult ? (
         <Result
           score={score}
           name={name}
           questionBank={questionBank}
           computeAnswer={computeAnswer}
-          responses={responses}
           viewCorrectAnswers={viewCorrectAnswers}
           viewCorrect={viewCorrect}
         />
+      ) : null}
+      {!viewCorrect && !isResult ? (
+        <button onClick={handleSubmit} className="submitBtn">
+          Submit
+        </button>
       ) : null}
     </div>
   );
