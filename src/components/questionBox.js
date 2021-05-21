@@ -2,6 +2,10 @@ import React, { useState } from "react";
 
 const QuestionBox = ({ question, options, selected, correct, viewCorrect }) => {
   const [answer, setAnswer] = useState(options);
+  const [selectedAnswer, setSelectedAnswer] = useState("");
+  const handleRadio = (event) => {
+    setSelectedAnswer(event.target.value);
+  };
 
   return (
     <div>
@@ -9,12 +13,13 @@ const QuestionBox = ({ question, options, selected, correct, viewCorrect }) => {
         <div className="question">{question}</div>
         {!viewCorrect
           ? answer.map((text, index) => (
-              <label>
+              <label key={index}>
                 <input
                   className="answerBtn"
                   type="radio"
-                  name="answers"
+                  name={answer}
                   value={text}
+                  onChange={(e) => handleRadio(e)}
                   onClick={() => {
                     selected(text);
                   }}
