@@ -50,7 +50,6 @@
 .answerBtn {
   position: relative;
   padding: 10px;
-  /* background-color: rgb(250, 151, 37); */
   background-color: #24aae8;
   display: inline-block;
   margin: 10px;
@@ -106,4 +105,14 @@
   color: white;
   background: #2f7494;
   border-radius: 5px;
+}
+.submitBtn {
+  width: 80px;
+  height: 40px;
+  font-size: 15px;
+  margin-top: 10px;
+  border-radius: 5px;
+  font-weight: bolder;
+  background: #697689;
+  color: white;
 }

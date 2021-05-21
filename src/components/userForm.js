@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserForm = ({ name, nameHandler, submitHandler }) => {
+const UserForm = ({ name, nameHandler, formSubmit }) => {
   return (
     <div>
       <form className="form">
@@ -15,7 +15,7 @@ const UserForm = ({ name, nameHandler, submitHandler }) => {
         <button
           className="submit-btn"
           type="submit"
-          onClick={(e) => submitHandler(e)}
+          onClick={(e) => formSubmit(e)}
         >
           Submit
         </button>

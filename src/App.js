@@ -42,9 +42,9 @@ class App extends Component {
       ],
       name: "",
       score: 0,
-      responses: 0,
       isUser: false,
       viewCorrect: false,
+      isResult: false,
     };
   }
 
@@ -54,10 +54,16 @@ class App extends Component {
     });
   };
 
-  submitHandler = (event) => {
+  formSubmit = (event) => {
     event.preventDefault();
     this.setState({
       isUser: true,
+    });
+  };
+
+  handleSubmit = () => {
+    this.setState({
+      isResult: true,
     });
   };
 
@@ -67,15 +73,13 @@ class App extends Component {
         score: this.state.score + 1,
       });
     }
-    this.setState({
-      responses: this.state.responses < 5 ? this.state.responses + 1 : 5,
-    });
   };
 
   viewCorrectAnswers = () => {
+    console.log("before viewCorrect", this.state.viewCorrect);
     this.setState({
       viewCorrect: true,
-      responses: 0,
+      isResult: false,
     });
   };
 
@@ -86,18 +90,19 @@ class App extends Component {
           <UserForm
             name={this.state.name}
             nameHandler={this.nameHandler}
-            submitHandler={this.submitHandler}
+            formSubmit={this.formSubmit}
           />
         ) : null}
         {this.state.isUser ? (
           <Quiz
             questionBank={this.state.questionBank}
             computeAnswer={this.computeAnswer}
-            responses={this.state.responses}
             score={this.state.score}
             name={this.state.name}
             viewCorrectAnswers={this.viewCorrectAnswers}
             viewCorrect={this.state.viewCorrect}
+            handleSubmit={this.handleSubmit}
+            isResult={this.state.isResult}
           />
         ) : null}
       </div>
