@@ -76,7 +76,6 @@ class App extends Component {
   };
 
   viewCorrectAnswers = () => {
-    console.log("before viewCorrect", this.state.viewCorrect);
     this.setState({
       viewCorrect: true,
       isResult: false,
