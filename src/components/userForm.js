@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const UserForm = ({ name, nameHandler, formSubmit }) => {
   return (
@@ -12,12 +13,11 @@ const UserForm = ({ name, nameHandler, formSubmit }) => {
           value={name}
           onChange={(e) => nameHandler(e)}
         />
-        <button
-          className="submit-btn"
-          type="submit"
-          onClick={(e) => formSubmit(e)}
-        >
-          Submit
+
+        <button className="submit-btn" type="submit">
+          <Link to="/quiz" className="link-class">
+            Submit
+          </Link>
         </button>
       </form>
     </div>

@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
 import "./styles/style.css";
 import UserForm from "./components/userForm";
-import Quiz from "./components/quiz";
+import Result from "./components/result";
+import QuestionBox from "./components/questionBox";
+import CorrectAnswers from "./components/correctAnswers";
+import Error from "./components/error";
 
 class App extends Component {
   constructor(props) {
@@ -42,28 +46,12 @@ class App extends Component {
       ],
       name: "",
       score: 0,
-      isUser: false,
-      viewCorrect: false,
-      isResult: false,
     };
   }
 
   nameHandler = (event) => {
     this.setState({
       name: event.target.value,
-    });
-  };
-
-  formSubmit = (event) => {
-    event.preventDefault();
-    this.setState({
-      isUser: true,
-    });
-  };
-
-  handleSubmit = () => {
-    this.setState({
-      isResult: true,
     });
   };
 
@@ -75,36 +63,26 @@ class App extends Component {
     }
   };
 
-  viewCorrectAnswers = () => {
-    this.setState({
-      viewCorrect: true,
-      isResult: false,
-    });
-  };
-
   render() {
     return (
-      <div>
-        {!this.state.isUser ? (
-          <UserForm
-            name={this.state.name}
-            nameHandler={this.nameHandler}
-            formSubmit={this.formSubmit}
-          />
-        ) : null}
-        {this.state.isUser ? (
-          <Quiz
+      <Switch>
+        <Route exact path="/">
+          <UserForm name={this.state.name} nameHandler={this.nameHandler} />
+        </Route>
+        <Route path="/quiz">
+          <QuestionBox
             questionBank={this.state.questionBank}
-            computeAnswer={this.computeAnswer}
-            score={this.state.score}
-            name={this.state.name}
-            viewCorrectAnswers={this.viewCorrectAnswers}
-            viewCorrect={this.state.viewCorrect}
-            handleSubmit={this.handleSubmit}
-            isResult={this.state.isResult}
+            selected={this.computeAnswer}
           />
-        ) : null}
-      </div>
+        </Route>
+        <Route path="/result">
+          <Result score={this.state.score} name={this.state.name} />
+        </Route>
+        <Route path="/correct-answers">
+          <CorrectAnswers questionBank={this.state.questionBank} />
+        </Route>
+        <Route component={Error} />
+      </Switch>
     );
   }
 }
