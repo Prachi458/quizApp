@@ -1,36 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
-const QuestionBox = ({ question, options, selected, correct, viewCorrect }) => {
-  const [answer, setAnswer] = useState(options);
-  const [selectedAnswer, setSelectedAnswer] = useState("");
-  const handleRadio = (event) => {
-    setSelectedAnswer(event.target.value);
-  };
-
+const QuestionBox = ({ selected, questionBank }) => {
   return (
-    <div>
-      <div className="questionBox">
-        <div className="question">{question}</div>
-        {!viewCorrect
-          ? answer.map((text, index) => (
-              <label key={index}>
+    <div className="container">
+      <div className="title">Quiz App</div>
+      {questionBank.length > 0 &&
+        questionBank.map(({ question, answers, correct, questionId }) => (
+          <div className="questionBox">
+            <div className="question">{question}</div>
+            {answers.map((text) => (
+              <label key={questionId}>
                 <input
                   className="answerBtn"
                   type="radio"
-                  name={answer}
+                  name={answers}
                   value={text}
-                  onChange={(e) => handleRadio(e)}
                   onClick={() => {
-                    selected(text);
+                    selected(text, correct);
                   }}
                 />
                 {text}
               </label>
-            ))
-          : null}
-
-        {viewCorrect ? <button className="answerBtn">{correct}</button> : null}
-      </div>
+            ))}
+          </div>
+        ))}
+      <button className="submitBtn">
+        <Link to="/result" className="link-class">
+          Submit
+        </Link>
+      </button>
     </div>
   );
 };

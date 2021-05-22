@@ -1,33 +1,21 @@
 import React from "react";
-import Quiz from "./quiz";
+import { Link } from "react-router-dom";
 
-const Result = ({
-  score,
-  viewCorrectAnswers,
-  name,
-  questionBank,
-  computeAnswer,
-  responses,
-  viewCorrect,
-}) => {
+const Result = ({ score, name }) => {
   return (
-    <div className="score-board">
-      <div className="score">
-        {name} <br />
-        You Scored {score} / 5 correct answers!!
+    <div className="container">
+      <div className="title">Quiz App</div>
+      <div className="score-board">
+        <div className="score">
+          {name} <br />
+          You Scored {score} / 5 correct answers!!
+        </div>
+        <button className="viewAnswer-btn">
+          <Link to="/correct-answers" className="link-class">
+            View Correct Answers
+          </Link>
+        </button>
       </div>
-      <button className="viewAnswer-btn" onClick={viewCorrectAnswers}>
-        View Correct Answers
-      </button>
-      {viewCorrect ? (
-        <Quiz
-          questionBank={questionBank}
-          computeAnswer={computeAnswer}
-          responses={responses}
-          score={score}
-          viewCorrect={viewCorrect}
-        />
-      ) : null}
     </div>
   );
 };
