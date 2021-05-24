@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 const Result = ({ score, name }) => {
   return (
-    <div className="container">
+    <div className="result-container">
       <div className="title">Quiz App</div>
       <div className="score-board">
         <div className="score">
           {name} <br />
-          You Scored {score} / 5 correct answers!!
+          You Scored {score} / 10 correct answers!!
         </div>
         <button className="viewAnswer-btn">
           <Link to="/correct-answers" className="link-class">

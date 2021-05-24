@@ -11,43 +11,27 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      questionBank: [
-        {
-          question: "Everything in React is?",
-          answers: ["Module", "Component", "Package", "Class"],
-          correct: "Component",
-          questionId: "1",
-        },
-        {
-          question: "What is the name of ReactJS Developer?",
-          answers: ["Jordan mike", "Jordan Lee", "Jordan Walke", "Tim Lee"],
-          correct: "Jordan Walke",
-          questionId: "2",
-        },
-        {
-          question: "Who Develop ReactJS?",
-          answers: ["Apple", "Facebook", "Twitter", "Google"],
-          correct: "Facebook",
-          questionId: "3",
-        },
-        {
-          question:
-            "Which of the following API is a MUST for every ReactJS component?",
-          answers: ["getInitialState", "render", "renderComponent", "None"],
-          correct: "renderComponent",
-          questionId: "4",
-        },
-        {
-          question: "What is a react.js in MVC?",
-          answers: ["Controller", "Middleware", "Model", "Router"],
-          correct: "Controller",
-          questionId: "5",
-        },
-      ],
+      questionBank: [],
       name: "",
       score: 0,
     };
   }
+
+  componentDidMount() {
+    this.getQuestions();
+  }
+
+  getQuestions = () => {
+    fetch(
+      "https://opentdb.com/api.php?amount=10&category=27&difficulty=easy&type=multiple"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({
+          questionBank: data,
+        });
+      });
+  };
 
   nameHandler = (event) => {
     this.setState({
