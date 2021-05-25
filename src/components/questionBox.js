@@ -1,10 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Error from "./error";
 
-const QuestionBox = ({ selected, questionBank }) => {
-  console.log(questionBank.results);
+const QuestionBox = ({
+  selected,
+  questionBank,
+  name,
+  category,
+  difficulty,
+  submitHandler,
+}) => {
+  if (name === "" || category === "" || difficulty === "") {
+    return <Error />;
+  }
   return (
-    <div className="container">
+    <div className="question-container">
       <div className="title">Quiz App</div>
       {questionBank.results.length > 0 &&
         questionBank.results.map((item) => {
@@ -14,7 +24,6 @@ const QuestionBox = ({ selected, questionBank }) => {
               {item.incorrect_answers.map((text) => (
                 <label key={item.index}>
                   <input
-                    className="answerBtn"
                     type="radio"
                     name={item.incorrect_answers}
                     value={text}
@@ -41,7 +50,12 @@ const QuestionBox = ({ selected, questionBank }) => {
             </div>
           );
         })}
-      <button className="submitBtn">
+
+      <button
+        type="submit"
+        onClick={submitHandler}
+        className="form__submit-btn"
+      >
         <Link to="/result" className="link-class">
           Submit
         </Link>

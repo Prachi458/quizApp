@@ -13,17 +13,35 @@ class App extends Component {
     this.state = {
       questionBank: [],
       name: "",
+      category: "",
+      difficulty: "",
       score: 0,
+      usersData: [],
     };
   }
 
   componentDidMount() {
     this.getQuestions();
+    let userHistory = JSON.parse(localStorage.getItem("usersData"));
+
+    if (localStorage.getItem("usersData")) {
+      this.setState({
+        usersData: userHistory.usersData,
+      });
+    } else {
+      this.setState({
+        usersData: [],
+      });
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem("usersData", JSON.stringify(nextState));
   }
 
   getQuestions = () => {
     fetch(
-      "https://opentdb.com/api.php?amount=10&category=27&difficulty=easy&type=multiple"
+      `https://opentdb.com/api.php?amount=10&category=${this.state.category}&difficulty=${this.state.difficulty}&type=multiple`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -33,14 +51,31 @@ class App extends Component {
       });
   };
 
-  nameHandler = (event) => {
+  formHandler = (event) => {
+    const { name, value } = event.target;
     this.setState({
-      name: event.target.value,
+      [name]: value,
     });
   };
 
-  computeAnswer = (answer, correctAnswer) => {
-    if (answer === correctAnswer) {
+  submitHandler = (event) => {
+    event.preventDefault();
+    let addUsersData = [
+      ...this.state.usersData,
+      {
+        name: this.state.name,
+        category: this.state.category,
+        difficulty: this.state.difficulty,
+        score: this.state.score,
+      },
+    ];
+    this.setState({
+      usersData: addUsersData,
+    });
+  };
+
+  computeAnswer = (answer) => {
+    if (answer === this.state.questionBank.results.correct_answer) {
       this.setState({
         score: this.state.score + 1,
       });
@@ -48,22 +83,44 @@ class App extends Component {
   };
 
   render() {
+    const { name, category, difficulty, score, questionBank, usersData } =
+      this.state;
     return (
       <Switch>
         <Route exact path="/">
-          <UserForm name={this.state.name} nameHandler={this.nameHandler} />
+          <UserForm
+            name={name}
+            category={category}
+            difficulty={difficulty}
+            formHandler={this.formHandler}
+            usersData={usersData}
+          />
         </Route>
         <Route path="/quiz">
           <QuestionBox
-            questionBank={this.state.questionBank}
+            questionBank={questionBank}
             selected={this.computeAnswer}
+            name={name}
+            category={category}
+            difficulty={difficulty}
+            submitHandler={this.submitHandler}
           />
         </Route>
         <Route path="/result">
-          <Result score={this.state.score} name={this.state.name} />
+          <Result
+            score={score}
+            name={name}
+            category={category}
+            difficulty={difficulty}
+          />
         </Route>
         <Route path="/correct-answers">
-          <CorrectAnswers questionBank={this.state.questionBank} />
+          <CorrectAnswers
+            questionBank={questionBank}
+            name={name}
+            category={category}
+            difficulty={difficulty}
+          />
         </Route>
         <Route component={Error} />
       </Switch>
