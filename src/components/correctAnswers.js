@@ -1,6 +1,10 @@
 import React from "react";
+import Error from "./error";
 
-const CorrectAnswers = ({ questionBank }) => {
+const CorrectAnswers = ({ questionBank, name, category, difficulty }) => {
+  if (name === "" || category === "" || difficulty === "") {
+    return <Error />;
+  }
   return (
     <div>
       <div className="correct-answer-container">

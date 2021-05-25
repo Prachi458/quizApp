@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Error from "./error";
 
-const Result = ({ score, name }) => {
+const Result = ({ score, name, category, difficulty }) => {
+  if (name === "" || category === "" || difficulty === "") {
+    return <Error />;
+  }
   return (
     <div className="result-container">
       <div className="title">Quiz App</div>
@@ -10,11 +14,11 @@ const Result = ({ score, name }) => {
           {name} <br />
           You Scored {score} / 10 correct answers!!
         </div>
-        <button className="viewAnswer-btn">
-          <Link to="/correct-answers" className="link-class">
+        <Link to="/correct-answers">
+          <button type="submit" className="viewAnswer-btn">
             View Correct Answers
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
     </div>
   );
