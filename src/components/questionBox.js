@@ -1,18 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Error from "./error";
 
-const QuestionBox = ({
-  selected,
-  questionBank,
-  name,
-  category,
-  difficulty,
-  submitHandler,
-}) => {
-  if (name === "" || category === "" || difficulty === "") {
-    return <Error />;
-  }
+const QuestionBox = ({ selected, questionBank, submitHandler }) => {
   return (
     <div className="question-container">
       <div className="title">Quiz App</div>

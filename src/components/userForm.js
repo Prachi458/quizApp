@@ -2,7 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import UsersHistory from "./usersHistory";
 
-const UserForm = ({ name, category, difficulty, usersData, formHandler }) => {
+const UserForm = ({
+  name,
+  category,
+  difficulty,
+  usersData,
+  formHandler,
+  submitForm,
+}) => {
   return (
     <div>
       <div className="form">
@@ -82,11 +89,16 @@ const UserForm = ({ name, category, difficulty, usersData, formHandler }) => {
           </select>
 
           <br />
-          <Link to="/quiz">
-            <button type="submit" className="form__submit-btn">
+
+          <button
+            type="submit"
+            className="form__submit-btn"
+            onClick={submitForm}
+          >
+            <Link to="/quiz" className="link-class">
               Submit
-            </button>
-          </Link>
+            </Link>
+          </button>
         </form>
       </div>
       <div>

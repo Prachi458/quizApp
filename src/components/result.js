@@ -1,11 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Error from "./error";
 
-const Result = ({ score, name, category, difficulty }) => {
-  if (name === "" || category === "" || difficulty === "") {
-    return <Error />;
-  }
+const Result = ({ score, name }) => {
   return (
     <div className="result-container">
       <div className="title">Quiz App</div>

@@ -6,6 +6,7 @@ import Result from "./components/result";
 import QuestionBox from "./components/questionBox";
 import CorrectAnswers from "./components/correctAnswers";
 import Error from "./components/error";
+import PrivateRoute from "./components/PrivateRoute";
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class App extends Component {
       difficulty: "",
       score: 0,
       usersData: [],
+      isSubmitted: false,
     };
   }
 
@@ -58,6 +60,12 @@ class App extends Component {
     });
   };
 
+  submitForm = () => {
+    this.setState({
+      isSubmitted: true,
+    });
+  };
+
   submitHandler = (event) => {
     event.preventDefault();
     let addUsersData = [
@@ -94,34 +102,25 @@ class App extends Component {
             difficulty={difficulty}
             formHandler={this.formHandler}
             usersData={usersData}
+            submitForm={this.submitForm}
           />
         </Route>
-        <Route path="/quiz">
+        <PrivateRoute path="/quiz" isSubmitted={this.state.isSubmitted}>
           <QuestionBox
             questionBank={questionBank}
             selected={this.computeAnswer}
-            name={name}
-            category={category}
-            difficulty={difficulty}
             submitHandler={this.submitHandler}
           />
-        </Route>
-        <Route path="/result">
-          <Result
-            score={score}
-            name={name}
-            category={category}
-            difficulty={difficulty}
-          />
-        </Route>
-        <Route path="/correct-answers">
-          <CorrectAnswers
-            questionBank={questionBank}
-            name={name}
-            category={category}
-            difficulty={difficulty}
-          />
-        </Route>
+        </PrivateRoute>
+        <PrivateRoute path="/result" isSubmitted={this.state.isSubmitted}>
+          <Result score={score} name={name} />
+        </PrivateRoute>
+        <PrivateRoute
+          path="/correct-answers"
+          isSubmitted={this.state.isSubmitted}
+        >
+          <CorrectAnswers questionBank={questionBank} />
+        </PrivateRoute>
         <Route component={Error} />
       </Switch>
     );
