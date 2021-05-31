@@ -6,7 +6,6 @@ import { quizLoad, quizResult, history } from "../redux/actions";
 const QuestionBox = ({ category, difficulty }) => {
   const dispatch = useDispatch();
   const questionBank = useSelector((state) => state.quiz.questionBank);
-  const [isLoading, setIsLoading] = useState(true);
 
   const enteredName = useSelector((state) => state.user.name);
   const enteredCategory = useSelector((state) => state.user.category);
@@ -14,7 +13,6 @@ const QuestionBox = ({ category, difficulty }) => {
   const score = useSelector((state) => state.result.score);
 
   useEffect(() => {
-    setIsLoading(false);
     fetch(
       `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`
     )
@@ -43,7 +41,7 @@ const QuestionBox = ({ category, difficulty }) => {
     <div>
       <div className="question-container">
         <div className="title">Quiz App</div>
-        {isLoading ? <ClipLoader size={100} /> : null}
+
         {questionBank.length > 0 &&
           questionBank.map((item) => {
             return (
