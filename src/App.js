@@ -12,53 +12,29 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      questionBank: [],
       name: "",
       category: "",
       difficulty: "",
-      score: 0,
-      usersData: [],
-      isSubmitted: false,
     };
   }
 
-  componentDidMount() {
-    this.getQuestions();
-    let userHistory = JSON.parse(localStorage.getItem("usersData"));
+  // componentDidMount() {
+  //   let userHistory = JSON.parse(localStorage.getItem("usersData"));
 
-    if (localStorage.getItem("usersData")) {
-      this.setState({
-        usersData: userHistory.usersData,
-      });
-    } else {
-      this.setState({
-        usersData: [],
-      });
-    }
-  }
+  //   if (localStorage.getItem("usersData")) {
+  //     this.setState({
+  //       usersData: userHistory.usersData,
+  //     });
+  //   } else {
+  //     this.setState({
+  //       usersData: [],
+  //     });
+  //   }
+  // }
 
-  componentWillUpdate(nextProps, nextState) {
-    localStorage.setItem("usersData", JSON.stringify(nextState));
-  }
-
-  getQuestions = () => {
-    fetch(
-      `https://opentdb.com/api.php?amount=10&category=${this.state.category}&difficulty=${this.state.difficulty}&type=multiple`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({
-          questionBank: data,
-        });
-      });
-  };
-
-  formHandler = (event) => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
-  };
+  // UNSAFE_componentWillUpdate(nextProps, nextState) {
+  //   localStorage.setItem("usersData", JSON.stringify(nextState));
+  // }
 
   submitForm = () => {
     this.setState({
@@ -66,60 +42,25 @@ class App extends Component {
     });
   };
 
-  submitHandler = (event) => {
-    event.preventDefault();
-    let addUsersData = [
-      ...this.state.usersData,
-      {
-        name: this.state.name,
-        category: this.state.category,
-        difficulty: this.state.difficulty,
-        score: this.state.score,
-      },
-    ];
-    this.setState({
-      usersData: addUsersData,
-    });
-  };
-
-  computeAnswer = (answer) => {
-    if (answer === this.state.questionBank.results.correct_answer) {
-      this.setState({
-        score: this.state.score + 1,
-      });
-    }
-  };
-
   render() {
-    const { name, category, difficulty, score, questionBank, usersData } =
-      this.state;
+    const { category, difficulty } = this.state;
+
     return (
       <Switch>
         <Route exact path="/">
-          <UserForm
-            name={name}
-            category={category}
-            difficulty={difficulty}
-            formHandler={this.formHandler}
-            usersData={usersData}
-            submitForm={this.submitForm}
-          />
+          <UserForm submitForm={this.submitForm} />
         </Route>
         <PrivateRoute path="/quiz" isSubmitted={this.state.isSubmitted}>
-          <QuestionBox
-            questionBank={questionBank}
-            selected={this.computeAnswer}
-            submitHandler={this.submitHandler}
-          />
+          <QuestionBox category={category} difficulty={difficulty} />
         </PrivateRoute>
         <PrivateRoute path="/result" isSubmitted={this.state.isSubmitted}>
-          <Result score={score} name={name} />
+          <Result />
         </PrivateRoute>
         <PrivateRoute
           path="/correct-answers"
           isSubmitted={this.state.isSubmitted}
         >
-          <CorrectAnswers questionBank={questionBank} />
+          <CorrectAnswers />
         </PrivateRoute>
         <Route component={Error} />
       </Switch>

@@ -1,19 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../redux/actions";
 import UsersHistory from "./usersHistory";
 
-const UserForm = ({
-  name,
-  category,
-  difficulty,
-  usersData,
-  formHandler,
-  submitForm,
-}) => {
+const UserForm = ({ submitForm }) => {
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [difficulty, setDifficulty] = useState("");
+
+  const dispatch = useDispatch();
+
+  const nameHandler = (event) => {
+    setName(event.target.value);
+  };
+
+  const categoryHandler = (event) => {
+    setCategory(event.target.value);
+  };
+
+  const difficultyHandler = (event) => {
+    setDifficulty(event.target.value);
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    dispatch(addUser(name, category, difficulty));
+  };
+
   return (
     <div>
       <div className="form">
-        <form>
+        <form onSubmit={submitHandler}>
           <label className="form__name-label">Name : </label>
           <br />
           <input
@@ -22,7 +40,7 @@ const UserForm = ({
             type="text"
             name="name"
             value={name}
-            onChange={(e) => formHandler(e)}
+            onChange={(e) => nameHandler(e)}
             required
           />
           <br />
@@ -32,7 +50,7 @@ const UserForm = ({
             className="form__select"
             name="category"
             value={category}
-            onChange={(e) => formHandler(e)}
+            onChange={(e) => categoryHandler(e)}
           >
             <option>Any Category</option>
             <option value="Entertainment: Books">Entertainment: Books</option>
@@ -80,7 +98,8 @@ const UserForm = ({
             className="form__select"
             name="difficulty"
             value={difficulty}
-            onChange={(e) => formHandler(e)}
+            onChange={(e) => difficultyHandler(e)}
+            onClick={submitForm}
           >
             <option value="any">Any Difficulty</option>
             <option value="easy">Easy</option>
@@ -89,11 +108,10 @@ const UserForm = ({
           </select>
 
           <br />
-
           <button
             type="submit"
+            onClick={submitHandler}
             className="form__submit-btn"
-            onClick={submitForm}
           >
             <Link to="/quiz" className="link-class">
               Submit
@@ -102,7 +120,7 @@ const UserForm = ({
         </form>
       </div>
       <div>
-        <UsersHistory usersData={usersData} />
+        <UsersHistory />
       </div>
     </div>
   );
