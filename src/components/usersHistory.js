@@ -1,6 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-const UsersHistory = ({ usersData }) => {
+const UsersHistory = () => {
+  const usersData = useSelector((state) => state.user.usersData);
+  const result = useSelector((state) => state.result.score);
+
   return (
     <div>
       <table className="table-class">
@@ -17,7 +21,7 @@ const UsersHistory = ({ usersData }) => {
                 <td className="table__data-class">{item.name}</td>
                 <td className="table__data-class">{item.category}</td>
                 <td className="table__data-class">{item.difficulty}</td>
-                <td className="table__data-score-class">{item.score}</td>
+                <td className="table__data-score-class">{result}</td>
               </tr>
             </tbody>
           );
