@@ -7,9 +7,9 @@ export const addUser = (name, category, difficulty) => ({
   difficulty,
 });
 
-export const quizLoad = (quiz) => ({
+export const quizLoad = (questionBank) => ({
   type: QUIZ_LOAD,
-  quiz,
+  payload: questionBank,
 });
 
 export const quizResult = (answer, correct_answer) => ({
@@ -22,3 +22,20 @@ export const history = (message) => ({
   type: HISTORY,
   message,
 });
+
+export const fetchData = () => {
+  return function (dispatch, getState) {
+    fetch(
+      `https://opentdb.com/api.php?amount=10&category=${
+        getState().user.category
+      }&difficulty=${getState().user.difficulty}&type=multiple`
+    )
+      .then((response) => response.json())
+      .then((data) =>
+        dispatch({
+          type: QUIZ_LOAD,
+          payload: data.results,
+        })
+      );
+  };
+};

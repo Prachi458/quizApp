@@ -1,26 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { quizLoad, quizResult, history } from "../redux/actions";
+import { quizResult, history } from "../redux/actions";
 
-const QuestionBox = ({ category, difficulty }) => {
+const QuestionBox = () => {
   const dispatch = useDispatch();
   const questionBank = useSelector((state) => state.quiz.questionBank);
-
   const enteredName = useSelector((state) => state.user.name);
   const enteredCategory = useSelector((state) => state.user.category);
   const enteredDifficulty = useSelector((state) => state.user.difficulty);
   const score = useSelector((state) => state.result.score);
-
-  useEffect(() => {
-    fetch(
-      `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(quizLoad(data.results));
-      });
-  }, [category, difficulty, dispatch]);
 
   const computeAnswer = (answer, correct_answer) => {
     dispatch(quizResult(answer, correct_answer));
