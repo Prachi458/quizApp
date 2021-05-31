@@ -2,8 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const UsersHistory = () => {
-  const usersData = useSelector((state) => state.user.usersData);
-  const result = useSelector((state) => state.result.score);
+  const history = useSelector((state) => state.history.usersData);
 
   return (
     <div>
@@ -14,14 +13,14 @@ const UsersHistory = () => {
           <th className="table__heading-class">Difficulty</th>
           <th className="table__heading-score-class">Score</th>
         </thead>
-        {usersData.map((item) => {
+        {history.map((item) => {
           return (
             <tbody>
               <tr>
                 <td className="table__data-class">{item.name}</td>
                 <td className="table__data-class">{item.category}</td>
                 <td className="table__data-class">{item.difficulty}</td>
-                <td className="table__data-score-class">{result}</td>
+                <td className="table__data-score-class">{item.score}</td>
               </tr>
             </tbody>
           );

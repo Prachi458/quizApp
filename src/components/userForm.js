@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addUser } from "../redux/actions";
 import UsersHistory from "./usersHistory";
 
@@ -25,13 +25,7 @@ const UserForm = ({ submitForm }) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    dispatch(
-      addUser({
-        name: name,
-        category: category,
-        difficulty: difficulty,
-      })
-    );
+    dispatch(addUser(name, category, difficulty));
   };
 
   return (

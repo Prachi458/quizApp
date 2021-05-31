@@ -1,7 +1,9 @@
 import { ADD_USER } from "../actions/types";
 
 const initialState = {
-  usersData: [],
+  name: "",
+  category: "",
+  difficulty: "",
 };
 
 const user = (state = initialState, action) => {
@@ -9,10 +11,13 @@ const user = (state = initialState, action) => {
     case ADD_USER:
       return {
         ...state,
-        usersData: [...state.usersData, action.user],
+        name: action.name,
+        category: action.category,
+        difficulty: action.difficulty,
       };
     default:
       return state;
   }
 };
+
 export default user;

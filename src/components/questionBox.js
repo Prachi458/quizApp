@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, quizLoad, quizResult } from "../redux/actions";
-import ClipLoader from "react-spinners/ClipLoader";
-const QuestionBox = ({ submitHandler, category, difficulty }) => {
+import { quizLoad, quizResult, history } from "../redux/actions";
+
+const QuestionBox = ({ category, difficulty }) => {
   const dispatch = useDispatch();
   const questionBank = useSelector((state) => state.quiz.questionBank);
   const [isLoading, setIsLoading] = useState(true);
+
+  const enteredName = useSelector((state) => state.user.name);
+  const enteredCategory = useSelector((state) => state.user.category);
+  const enteredDifficulty = useSelector((state) => state.user.difficulty);
+  const score = useSelector((state) => state.result.score);
 
   useEffect(() => {
     setIsLoading(false);
@@ -21,6 +26,17 @@ const QuestionBox = ({ submitHandler, category, difficulty }) => {
 
   const computeAnswer = (answer, correct_answer) => {
     dispatch(quizResult(answer, correct_answer));
+  };
+
+  const submitHandler = () => {
+    dispatch(
+      history({
+        name: enteredName,
+        category: enteredCategory,
+        difficulty: enteredDifficulty,
+        score: score,
+      })
+    );
   };
 
   return (
