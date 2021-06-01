@@ -9,7 +9,7 @@ const quiz = (state = initialState, action) => {
     case QUIZ_LOAD:
       return {
         ...state,
-        questionBank: action.quiz,
+        questionBank: action.payload,
       };
     default:
       return state;

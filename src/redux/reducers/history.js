@@ -15,4 +15,5 @@ const history = (state = initialState, action) => {
       return state;
   }
 };
+
 export default history;

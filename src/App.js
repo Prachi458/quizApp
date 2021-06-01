@@ -11,30 +11,8 @@ import PrivateRoute from "./components/PrivateRoute";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      category: "",
-      difficulty: "",
-    };
+    this.state = {};
   }
-
-  // componentDidMount() {
-  //   let userHistory = JSON.parse(localStorage.getItem("usersData"));
-
-  //   if (localStorage.getItem("usersData")) {
-  //     this.setState({
-  //       usersData: userHistory.usersData,
-  //     });
-  //   } else {
-  //     this.setState({
-  //       usersData: [],
-  //     });
-  //   }
-  // }
-
-  // UNSAFE_componentWillUpdate(nextProps, nextState) {
-  //   localStorage.setItem("usersData", JSON.stringify(nextState));
-  // }
 
   submitForm = () => {
     this.setState({
@@ -43,15 +21,13 @@ class App extends Component {
   };
 
   render() {
-    const { category, difficulty } = this.state;
-
     return (
       <Switch>
         <Route exact path="/">
           <UserForm submitForm={this.submitForm} />
         </Route>
         <PrivateRoute path="/quiz" isSubmitted={this.state.isSubmitted}>
-          <QuestionBox category={category} difficulty={difficulty} />
+          <QuestionBox />
         </PrivateRoute>
         <PrivateRoute path="/result" isSubmitted={this.state.isSubmitted}>
           <Result />
