@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addUser, fetchData } from "../redux/actions";
+import { addUser } from "../redux/actions";
+import { fetchData } from "../redux/thunk";
 import UsersHistory from "./usersHistory";
 
 const UserForm = ({ submitForm }) => {

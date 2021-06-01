@@ -24,18 +24,13 @@ export const history = (message) => ({
 });
 
 export const fetchData = () => {
-  return function (dispatch, getState) {
-    fetch(
+  return async function (dispatch, getState) {
+    const response = await fetch(
       `https://opentdb.com/api.php?amount=10&category=${
         getState().user.category
       }&difficulty=${getState().user.difficulty}&type=multiple`
-    )
-      .then((response) => response.json())
-      .then((data) =>
-        dispatch({
-          type: QUIZ_LOAD,
-          payload: data.results,
-        })
-      );
+    );
+    const json = await response.json();
+    dispatch(quizLoad(json.results));
   };
 };
