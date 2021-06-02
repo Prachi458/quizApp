@@ -1,21 +1,31 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Button, Grid } from "@material-ui/core";
 
 const CorrectAnswers = () => {
   const questionBank = useSelector((state) => state.quiz.questionBank);
   return (
-    <div>
-      <div className="correct-answer-container">
-        <div className="title">Quiz App</div>
+    <Grid
+      container
+      alignItems="center"
+      justify="center"
+      className="correct-answer-container"
+    >
+      <Grid item direction="column">
+        <Grid item className="title">
+          Quiz App
+        </Grid>
         {questionBank.length > 0 &&
           questionBank.map((item) => (
-            <div className="questionBox">
+            <Grid item className="questionBox">
               <div className="question">{item.question}</div>
-              <button className="answerBtn">{item.correct_answer}</button>
-            </div>
+              <Button variant="contained" color="secondary">
+                {item.correct_answer}
+              </Button>
+            </Grid>
           ))}
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 

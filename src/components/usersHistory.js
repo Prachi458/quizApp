@@ -1,11 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Grid } from "@material-ui/core";
 
 const UsersHistory = () => {
   const history = useSelector((state) => state.history.usersData);
 
   return (
-    <div>
+    <Grid container>
       <table className="table-class">
         <thead>
           <th className="table__heading-class">Name</th>
@@ -26,7 +27,7 @@ const UsersHistory = () => {
           );
         })}
       </table>
-    </div>
+    </Grid>
   );
 };
 export default UsersHistory;
