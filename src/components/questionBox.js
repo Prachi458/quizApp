@@ -1,7 +1,9 @@
 import React from "react";
+import { Button, Grid, FormControl } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { quizResult, history } from "../redux/actions";
+import { history } from "../redux/actions";
+import SingleQuestion from "./singleQuestion";
 
 const QuestionBox = () => {
   const dispatch = useDispatch();
@@ -10,10 +12,6 @@ const QuestionBox = () => {
   const enteredCategory = useSelector((state) => state.user.category);
   const enteredDifficulty = useSelector((state) => state.user.difficulty);
   const score = useSelector((state) => state.result.score);
-
-  const computeAnswer = (answer, correct_answer) => {
-    dispatch(quizResult(answer, correct_answer));
-  };
 
   const submitHandler = () => {
     dispatch(
@@ -27,57 +25,36 @@ const QuestionBox = () => {
   };
 
   return (
-    <div>
-      <div className="question-container">
-        <div className="title">Quiz App</div>
-
-        {questionBank.length > 0 &&
-          questionBank.map((item) => {
-            return (
-              <div className="questionBox">
-                <div className="question">{item.question}</div>
-                {item.incorrect_answers.map((text) => (
-                  <label key={item.index}>
-                    <input
-                      type="radio"
-                      name={item.incorrect_answers}
-                      value={text}
-                      className="answerBtn"
-                      onClick={() => {
-                        computeAnswer(text, item.correct_answer);
-                      }}
-                    />
-
-                    {text}
-                  </label>
-                ))}
-                <label key={item.index}>
-                  <input
-                    type="radio"
-                    name={item.incorrect_answers}
-                    className="answerBtn"
-                    value={item.correct_answer}
-                    onClick={() => {
-                      computeAnswer(item.correct_answer, item.correct_answer);
-                    }}
-                  />
-                  {item.correct_answer}
-                </label>
-              </div>
-            );
-          })}
-
-        <button
-          type="submit"
-          onClick={submitHandler}
-          className="form__submit-btn"
-        >
-          <Link to="/result" className="link-class">
-            Submit
-          </Link>
-        </button>
-      </div>
-    </div>
+    <Grid
+      container
+      alignItems="center"
+      justify="center"
+      className="question-container"
+    >
+      <Grid item>
+        <Grid item className="title">
+          Quiz App
+        </Grid>
+        <FormControl component="fieldset">
+          {questionBank.length > 0 &&
+            questionBank.map((item) => {
+              return <SingleQuestion item={item} dispatch={dispatch} />;
+            })}
+        </FormControl>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="primary"
+            size="medium"
+            onClick={submitHandler}
+          >
+            <Link to="/result" className="link-class">
+              Submit
+            </Link>
+          </Button>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 export default QuestionBox;
