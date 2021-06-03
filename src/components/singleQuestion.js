@@ -19,9 +19,10 @@ const SingleQuestion = ({ item, dispatch }) => {
         {item.question}
       </Grid>
       <Grid item>
-        {item.incorrect_answers.map((text) => (
+        {item.incorrect_answers.map((text, index) => (
           <RadioGroup
-            name={item.incorrect_answers}
+            key={index}
+            name={item.correct_answer}
             value={answerValue}
             onChange={(e) => handleChange(e)}
             onClick={() => {
@@ -33,7 +34,7 @@ const SingleQuestion = ({ item, dispatch }) => {
         ))}
 
         <RadioGroup
-          name={item.incorrect_answers}
+          name={item.correct_answer}
           value={answerValue}
           onChange={(e) => handleChange(e)}
           onClick={() => {

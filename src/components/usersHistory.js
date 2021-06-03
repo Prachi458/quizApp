@@ -31,35 +31,21 @@ const UsersHistory = () => {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              {tableHeadings.map((head) => (
-                <TableCell key={head}>{head}</TableCell>
+              {tableHeadings.map((head, index) => (
+                <TableCell key={index}>{head}</TableCell>
               ))}
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {history.map((item) => (
-              <TableRow key={item}>
-                {tableHeadings.map((col) => {
-                  return (
-                    <TableCell scope="row" key={col}>
-                      {item.name}
-                    </TableCell>
-                  );
-                })}
+            {history.map((item, index) => (
+              <TableRow key={index}>
+                {Object.keys(item).map((value, index) => (
+                  <TableCell key={index}>{item[value]}</TableCell>
+                ))}
               </TableRow>
             ))}
           </TableBody>
-          {/* <TableBody>
-            {history.map((item) => (
-              <TableRow key={item.name}>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.category}</TableCell>
-                <TableCell>{item.difficulty}</TableCell>
-                <TableCell>{item.score}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody> */}
         </Table>
       </TableContainer>
     </Grid>
