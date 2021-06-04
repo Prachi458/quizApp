@@ -18,9 +18,9 @@ const CorrectAnswers = () => {
         {questionBank.length > 0 &&
           questionBank.map((item, index) => (
             <Grid item className="questionBox" key={index}>
-              <div className="question" key={index}>
+              <Grid item className="question" key={index}>
                 {item.question}
-              </div>
+              </Grid>
               <Button variant="contained" color="secondary" key={item.question}>
                 {item.correct_answer}
               </Button>
