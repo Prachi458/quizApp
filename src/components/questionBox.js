@@ -37,8 +37,10 @@ const QuestionBox = () => {
         </Grid>
         <FormControl component="fieldset">
           {questionBank.length > 0 &&
-            questionBank.map((item) => {
-              return <SingleQuestion item={item} dispatch={dispatch} />;
+            questionBank.map((item, index) => {
+              return (
+                <SingleQuestion item={item} dispatch={dispatch} key={index} />
+              );
             })}
         </FormControl>
         <Grid item>
