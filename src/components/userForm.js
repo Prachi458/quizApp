@@ -38,7 +38,7 @@ const UserForm = ({ submitForm }) => {
             id="outlined-basic"
             label="Name"
             variant="standard"
-            size="large"
+            size="medium"
             name="name"
             value={name}
             onChange={(e) => nameHandler(e)}
@@ -130,7 +130,9 @@ const UserForm = ({ submitForm }) => {
             </Link>
           </Button>
         </Grid>
-        <UsersHistory />
+        <Grid item>
+          <UsersHistory />
+        </Grid>
       </Grid>
     </form>
   );
